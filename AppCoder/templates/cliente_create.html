@@ -1,0 +1,44 @@
+{% extends 'padre.html' %}
+
+{% block contenidoQueCambia %}
+  <!-- product section -->
+  <section class="product_section layout_padding">
+    <div class="d-flex justify-content-center">
+      <h2 class="custom_heading">
+        Clientes
+      </h2>
+    </div>
+    <div class="container layout_padding2">
+      <div class="img-box box-1">
+        
+        <h5>Agregar Cliente</h5>
+
+        <form action="{% url 'CrearCliente' %}" method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+    
+            <button rel="stylesheet" type="submit", style="background-color: #007bff; color: #fff;">Enviar</button>
+            <button>
+                <a rel="stylesheet" style="background-color: #007bff; color: #fff;" href="{% url 'ListarClientes' %}">Lista de Clientes</a>
+            </button>
+        </form>
+
+      </div>
+      <div class="img-box box-2">
+        <img src="/static/images/p-2.jpg" alt="">
+      </div>
+      <div class="img-box box-3">
+        <img src="/static/images/p-3.jpg" alt="">
+      </div>
+      <div class="img-box box-4">
+        <img src="/static/images/p-4.jpg" alt="">
+      </div>
+    </div>
+  </section>
+
+
+  <!-- end product section -->
+
+
+{% endblock contenidoQueCambia %}
+

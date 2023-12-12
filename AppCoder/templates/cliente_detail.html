@@ -1,0 +1,40 @@
+{% extends 'padre.html' %}
+
+{% block contenidoQueCambia %}
+
+  <!-- why section -->
+
+  <section class="why_section layout_padding">
+    <div class="container">
+      <div class="d-flex flex-column align-items-center text-center">
+        <h2 class="custom_heading ">
+            Aca podes acceder a la lista de nuestros clientes
+        </h2>
+        <p class="">
+          It is a long established fact that a reader will be distracted by the readable content of a page when looking
+          at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as
+          opposed to using 'Content here, content here', making it
+        </p>
+      </div>
+    </div>
+    <div class="why_container my-4">
+      <div class="img_box">
+        <h1 style="color: rgb(16, 66, 109);">Vista en detalle del cliente</h1>
+
+        <h4 style="color: rgb(25, 184, 212);">Nombre: {{ cliente.nombre }}</h4>
+        <h4 style="color: rgb(25, 184, 212);">Mail: {{ cliente.mail }}</h4>
+        <h4 style="color: rgb(25, 184, 212);">Telefono: {{ cliente.tel }}</h4>
+        <h4 style="color: rgb(25, 184, 212);">Metodo de Pago: {{ cliente.metodo_de_pago }}</h4>
+
+      </div>
+    </div>
+    <div class="d-flex justify-content-center">
+      <a href="">
+        Read More
+      </a>
+    </div>
+  </section>
+
+  <!-- end why section -->
+
+{% endblock contenidoQueCambia %}
