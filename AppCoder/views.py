@@ -1,10 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import *
 from django.views.generic.edit import DeleteView,UpdateView,CreateView
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.forms import AuthenticationForm,UserCreationForm
 
 
 # Create your views here.
@@ -62,14 +64,60 @@ class ClienteDelete(DeleteView):
 
 
 
+
+
+#login, logout
+def loginView(req):
+    if req.method=='POST':
+        formulario=AuthenticationForm(req,data=req.POST)
+
+        if formulario.is_valid():
+
+            data=formulario.cleaned_data
+            usuario=data['username']
+            psw=data['password']
+            user=authenticate(username=usuario,password=psw)
+
+            if user:
+                login(req,user)
+                return render(req, 'inicio.html', {'mensaje': f'Bienvenido {usuario}!'})
+            else:
+                return render(req, 'inicio.html',{'mensaje','Datos incorrectos'})
+    else:
+        formulario=AuthenticationForm()
+    
+    return render(req, 'login.html',{'formulario':formulario})
+
+
+def logoutView(req):
+    if req.method=='POST':
+        logout(req)
+        return render(req, 'inicio.html',{'mensaje':' Vuelva pronto'})
+    else:
+        return render(req, 'inicio.html',{'mensaje':'Logout incorrecto'})
+
+
+def verificarLogin(req):
+    user=req.user
+    if user.is_authenticated:
+        return user
+    return None
+
+
+
+
+
+
 @login_required
 def agregar_producto(req):
 
-    empleado=req.user.empleado
-
-    if not empleado:
+    if not hasattr(req.user,'empleado') or not req.user.empleado:
+        messages.error(req,'Usuario no encortado')
         return render(req,'login.html')
     
+    empleado=req.user.empleado
+
+
     if req.method=='POST':
 
         formulario=ProductoForm(req.POST, req.FILES)
@@ -78,15 +126,34 @@ def agregar_producto(req):
 
             producto=formulario.save(commit=False)
             producto.empleado=empleado
-            producto.save()
-
-            messages.succes(req,'Producto agregado')
+            producto.save()            
+            messages.success(req,'Producto agregado con exito')
 
             return render(req,'producto_list.html')
-        else:
-            formulario=ProductoForm()
+
+    else:
+        formulario=ProductoForm()
         
-        return render(req,'agregarProducto.html',{'formulario':formulario})
+    return render(req,'agregarProducto.html',{'formulario':formulario})
+
+
+
+
+def register(req):
+    if req.method=='POST':
+        formulario=UserCreationForm(req.POST)
+
+        if formulario.is_valid():
+            user=formulario.save()
+
+            Empleado.objects.create(user=user)
+            loginView(req)
+            return render(req,'inicio.html')
+    
+    else:
+        formulario=UserCreationForm()
+    return render(req,'registro.html',{'formulario':formulario})
+
 
 
 
@@ -114,5 +181,8 @@ class ProductoDelete(DeleteView):
     template_name='producto_delete.html'
     success_url='/app-coder/listaProductos'
     context_object_name='producto'
+
+
+
 
 

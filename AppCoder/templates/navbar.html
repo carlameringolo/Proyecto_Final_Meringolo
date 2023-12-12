@@ -20,16 +20,30 @@
                     <a class="nav-link" href="{% url 'Inicio' %}">Inicio <span class="sr-only">(current)</span></a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Inicio' %}"> About </a>
+                    <a class="nav-link" href="{% url 'Registrar' %}"> Empleados </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Inicio' %}"> Product </a>
+                    <a class="nav-link" href="{% url 'ListarProductos' %}"> Productos </a>
                   </li>
+                  {% if verificarLogin %}
+                    <li>
+                        <a class="nav-link" href="{% url 'AgregarProducto' %}">Agregar Producto</a>
+                    </li>
+                  {% endif %}
                   <li class="nav-item">
                     <a class="nav-link" href="{% url 'CrearCliente' %}"> Client </a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="{% url 'Contacto' %}">Contact us</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Login' %}">Login</a>
+                  </li>
+                  <li class="nav-item">
+                    <form method="post" action="{% url 'Logout' %}" style="display: none;" id="logoutForm">
+                        {% csrf_token %}
+                    </form>
+                    <a class="nav-link" href="#" onclick="document.getElementById('logoutForm').submit()">Logout</a>                  
                   </li>
                 </ul>
               </div>
