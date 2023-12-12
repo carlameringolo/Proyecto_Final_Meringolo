@@ -1,0 +1,22 @@
+{% extends 'padre.html' %}
+
+{% block contenidoQueCambia %}
+    {% load static %}
+  <!-- about section -->
+  <section class="about_section layout_padding">
+    <div class="about_container">
+      <div class="container">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+        <form method="POST">
+            {% csrf_token %}
+            {{ formulario.as_p }}
+            <button type="submit">Enviar</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- end about section -->
+{% endblock contenidoQueCambia %}
+
