@@ -1,0 +1,22 @@
+{% extends 'padre.html' %}
+
+{% block contenidoQueCambia %}
+    {% load static %}
+  <!-- about section -->
+  <section class="about_section layout_padding">
+    <div class="about_container">
+      <div class="container">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+        {{ mensaje }}
+      </div>
+      <div class="d-flex justify-content-center">
+        <a style="background-color: #007bff; color: #fff;" href="{% url 'BuscarProducto' %}">Volver</a>
+  
+      </div>
+    </div>
+  </section>
+
+
+  <!-- end about section -->
+{% endblock contenidoQueCambia %}

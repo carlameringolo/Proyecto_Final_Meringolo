@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.forms import AuthenticationForm,UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.http import HttpResponseNotAllowed
 
 
 # Create your views here.
@@ -38,6 +38,7 @@ class ClienteList(LoginRequiredMixin,ListView):
     template_name='cliente_list.html'
     context_object_name='cliente'
     queryset=Cliente.objects.all()
+    login_url='Login'
 
 
 class ClienteDetail(DetailView):
@@ -112,12 +113,6 @@ def verificarLogin(req):
     return None
 
 
-'''   if not hasattr(req.user,'empleado') or not req.user.empleado:
-        messages.error(req,'Usuario no encortado')
-        return render(req,'login.html')
-    
-       empleado=req.user.empleado
-'''
 
 def register(req):
     if req.method=='POST':
@@ -139,7 +134,7 @@ def register(req):
 
 
 
-@login_required
+@login_required(login_url='Login')
 def agregar_producto(req):
 
     if req.method=='POST':
@@ -170,10 +165,7 @@ class ProductoCreate(LoginRequiredMixin,CreateView):
     template_name='producto_create.html'
     fields=['nombre_producto','precio','imagen','empleado']
     success_url='/app-coder/listaProductos'
-
-    def form_valid(self, form):
-        print("Formulario válido")
-        return super().form_valid(form)
+    login_url='Login'
 
 class ProductoList(ListView):
     model=Producto
@@ -198,8 +190,66 @@ class ProductoDelete(DeleteView):
     template_name='producto_delete.html'
     success_url='/app-coder/listaProductos'
     context_object_name='producto'
+    login_url='Login'
+
+
+def buscarProducto(req):
+    if req.method=='GET' or req.method=='POST':
+        formulario=BusquedaForm(req.GET if req.method=='GET' else req.POST)
+        if formulario.is_valid():
+            query=req.GET['nombre_producto']
+            try:
+                producto=Producto.objects.get(nombre_producto__icontains=query)
+                return render(req, 'producto_detail.html', {'producto':producto})
+            except Producto.DoesNotExist:
+                return render(req,'productoNo_encontrado.html', {'mensaje':'Producto no encontrado'})
+        else:
+            return render(req,'buscar_producto.html',{'formulario':formulario})
+    else:
+        return HttpResponseNotAllowed(['GET','POST'])
+   
 
 
 
+
+@login_required(login_url='Login')
+def editar_perfil(req):
+    
+    usuario= req.user
+
+    if req.method == 'POST':
+        
+        formulario=UserEditForm(req.POST,instance=req.user)
+        
+        if formulario.is_valid():
+
+            data=formulario.cleaned_data
+
+            usuario.first_name=data['first_name']
+            usuario.last_name=data['last_name']
+            usuario.email=data['email']
+            usuario.save()
+
+            context={
+                'first_name':usuario.first_name,
+                'last_name':usuario.last_name,
+                'email':usuario.email
+            }
+
+            return render(req,'perfil_actualizado.html',context)
+
+    else:
+        formulario=UserEditForm()
+
+    if not req.user.is_authenticated:
+        return render(req, 'login.html',{'formulario':formulario})
+    
+    return render(req, 'editarPerfil.html',{'formulario':formulario})
+
+
+
+
+def tablaPagos(req):
+    return render(req,'tabla.html')
 
 

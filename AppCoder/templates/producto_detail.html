@@ -8,23 +8,28 @@
     <div class="container">
       <div class="d-flex flex-column align-items-center text-center">
         <h2 class="custom_heading ">
-            Aca podes acceder al detalle de nustros productos
+            Aca podes acceder a la informacion de nuestros productos
         </h2>
       </div>
     </div>
     <div class="why_container my-4">
       <div class="img_box">
         
-        <h1 style="color: aliceblue;">Vista en detalle de los productos</h1>
+        <h1 style="color: rgb(16, 66, 109);">Vista en detalle de los productos</h1>
 
-        <h4 style="color: beige;">Nombre: {{ clase.nombre }}</h4>
-        <h4 style="color: beige;">Precio: {{ clase.precio }}</h4>
-        <h4 style="color: beige;">Empleado: {{ clase.empleado }}</h4>
-    
+        <h4 style="color: rgb(25, 184, 212);">Nombre: {{ producto.nombre_producto }}</h4>
+        <h4 style="color: rgb(25, 184, 212);">Precio: {{ producto.precio }}</h4>
+        <h4 style="color: rgb(25, 184, 212);">Empleado: {{ producto.empleado }}</h4>
+        {% if producto.imagen %}
+          <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+        {% endif %}
     
       </div>
     </div>
+    <div class="d-flex justify-content-center">
+      <a style="background-color: #007bff; color: #fff;" href="{% url 'ListarProductos' %}">Volver</a>
 
+    </div>
   </section>
 
   <!-- end why section -->

@@ -1,0 +1,67 @@
+{% extends 'padre.html' %}
+
+{% block contenidoQueCambia %}
+
+  <!-- why section -->
+
+  <section class="why_section layout_padding">
+    <div class="container">
+      <div class="d-flex flex-column align-items-center text-center">
+        <div class="container">
+            <style>
+                table {
+                    border-collapse: collapse;
+                    width: 100%;
+                    margin-top: 20px;
+                }
+    
+                th, td {
+                    border: 1px solid #ddd;
+                    padding: 12px; 
+                    text-align: left;
+                }
+    
+                th {
+                    background-color: #f2f2f2;
+                }
+            </style>
+    
+    
+            <table>
+                <tr>
+                    <th>Método de Pago</th>
+                    <th>Descuento</th>
+                </tr>
+                <tr>
+                    <td>Efectivo</td>
+                    <td>15%</td>
+                </tr>
+                <tr>
+                    <td>Mercado Pago</td>
+                    <td>7%</td>
+                </tr>
+                <tr>
+                    <td>Tarjeta de Crédito</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Tarjeta de Débito</td>
+                    <td>5%</td>
+                </tr>
+                <tr>
+                    <td>Transferencia</td>
+                    <td>4%</td>
+                </tr>
+                <tr>
+                    <td>Cheque</td>
+                    <td>-</td>
+                </tr>
+            </table>
+          </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- end why section -->
+
+{% endblock contenidoQueCambia %}

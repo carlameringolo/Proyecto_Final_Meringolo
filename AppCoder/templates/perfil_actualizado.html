@@ -1,0 +1,25 @@
+{% extends 'padre.html' %}
+
+{% block contenidoQueCambia %}
+    {% load static %}
+  <!-- about section -->
+  <section class="about_section layout_padding">
+    <div class="about_container">
+      <div class="container">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+        <h1>Perfil Actualizado</h1>
+        <table class="'table table-bordered">
+            <tr>
+                <td>Nombre:</td>
+                <td>{{ first_name }} {{ last_name }}</td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td>{{ email }}</td>
+            </tr>
+        </table>
+      </div>
+    </div>
+  </section>
+  <!-- end about section -->
+{% endblock contenidoQueCambia %}

@@ -1,31 +1,53 @@
 {% extends 'padre.html' %}
 
 {% block contenidoQueCambia %}
-
-  <!-- why section -->
-
-  <section class="why_section layout_padding">
-    <div class="container">
-      <div class="d-flex flex-column align-items-center text-center">
-        <h2 class="custom_heading ">
-            Aca podes acceder a la lista de nuestros productos
-        </h2>
-      </div>
+  {% load static %} 
+  <!-- product section -->
+  <section class="product_section layout_padding">
+    <div class="d-flex justify-content-center">
+      <h2 class="custom_heading">
+        Productos
+      </h2>
     </div>
-    <div class="why_container my-4">
-      <div class="img_box">
+    <div class="container layout_padding2">
+      <div class="img-box box-1">
         
-        <h1>Agregar productos</h1>
-        <form action="{% url 'AgregarProducto' %}" method="post">{% csrf_token %}
-            
-            {{form.as_p}}
-    
-            <button type="submit">Agregar</button>
-        </form>
-    
+        <img src="/static/images/p-1.jpg" alt="">
+
+      </div>
+      <div class="img-box box-2">
+        <img src="/static/images/p-2.jpg" alt="">
+      </div>
+      <div class="img-box box-3">
+        <img src="/static/images/p-3.jpg" alt="">
+      </div>
+      <div class="img-box box-4">
+
+        <div class="img_box">
+            <ul>
+                {% for producto in producto %}
+                    <li>
+                    
+                        <a style="background-color: #007bff; color: #fff;" href="{% url 'DetalleProducto' producto.id %}">{{ producto.nombre_producto }}</a>
+        
+                    </li>
+                    <div style="display: flex; column-gap: 5px;">
+                        <button>
+                            <a style="background-color: #007bff; color: #fff;" href="{% url 'EliminarProducto' producto.id %}">Eliminar</a>
+                        </button>
+                        <button>
+                            <a style="background-color: #007bff; color: #fff;" href="{% url 'ActualizarProducto' producto.id %}">Editar</a>
+                        </button>
+                    </div>
+                {% endfor %}
+            </ul>
+        </div>
       </div>
     </div>
   </section>
+
+
+  <!-- end product section -->
 
   <!-- end why section -->
 
