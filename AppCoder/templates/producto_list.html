@@ -8,13 +8,8 @@
     <div class="container">
       <div class="d-flex flex-column align-items-center text-center">
         <h2 class="custom_heading ">
-            Aca podes acceder a la lista de nuestros clientes
+            Aca podes acceder a la lista de nuestros productos
         </h2>
-        <p class="">
-          It is a long established fact that a reader will be distracted by the readable content of a page when looking
-          at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as
-          opposed to using 'Content here, content here', making it
-        </p>
       </div>
     </div>
     <div class="why_container my-4">
@@ -23,17 +18,12 @@
         <h1>Agregar productos</h1>
         <form action="{% url 'AgregarProducto' %}" method="post">{% csrf_token %}
             
-            {{formulario.as_p}}
+            {{form.as_p}}
     
             <button type="submit">Agregar</button>
         </form>
     
       </div>
-    </div>
-    <div class="d-flex justify-content-center">
-      <a href="">
-        Read More
-      </a>
     </div>
   </section>
 

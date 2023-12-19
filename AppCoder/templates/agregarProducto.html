@@ -1,42 +1,44 @@
 {% extends 'padre.html' %}
 
 {% block contenidoQueCambia %}
-
-  <!-- why section -->
-
-  <section class="why_section layout_padding">
-    <div class="container">
-      <div class="d-flex flex-column align-items-center text-center">
-        <h2 class="custom_heading ">
-            Aca podes acceder a la lista de nuestros clientes
-        </h2>
-        <p class="">
-          It is a long established fact that a reader will be distracted by the readable content of a page when looking
-          at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as
-          opposed to using 'Content here, content here', making it
-        </p>
-      </div>
+  <!-- product section -->
+  <section class="product_section layout_padding">
+    <div class="d-flex justify-content-center">
+      <h2 class="custom_heading">
+        Productos
+      </h2>
     </div>
-    <div class="why_container my-4">
-      <div class="img_box">
+    <div class="container layout_padding2">
+      <div class="img-box box-1">
         
-        <h1>Formulario - Agregar Profesor</h1>
-        <form action="{% url 'Registrar' %}" method="post">{% csrf_token %}
-            
+        <h5>Agregar Productos</h5>
+
+        <form action="{% url 'CrearProducto' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
             {{formulario.as_p}}
     
-            <button type="submit">Crear</button>
+            <button rel="stylesheet" type="submit", style="background-color: #007bff; color: #fff;">Enviar</button>
+            <button>
+                <a rel="stylesheet" style="background-color: #007bff; color: #fff;" href="{% url 'ListarProductos' %}">Lista de Productos</a>
+            </button>
         </form>
-    
+
       </div>
-    </div>
-    <div class="d-flex justify-content-center">
-      <a href="">
-        Read More
-      </a>
+
+      <div class="img-box box-2">
+        <img src="/static/images/p-2.jpg" alt="">
+      </div>
+      <div class="img-box box-3">
+        <img src="/static/images/p-3.jpg" alt="">
+      </div>
+      <div class="img-box box-4">
+        <img src="/static/images/p-4.jpg" alt="">
+      </div>
     </div>
   </section>
 
-  <!-- end why section -->
+
+  <!-- end product section -->
+
 
 {% endblock contenidoQueCambia %}

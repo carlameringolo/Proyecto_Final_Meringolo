@@ -19,7 +19,7 @@ urlpatterns = [
 
     path('listaProductos', ProductoList.as_view(), name='ListarProductos'),
 
-    path('agregar-producto', agregar_producto, name='AgregarProducto'),
+    path('agregar-producto', ProductoCreate.as_view(), name='AgregarProducto'),
 
     path('accounts/login', loginView, name='Login'),
     path('logout', logoutView, name='Logout'),

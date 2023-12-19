@@ -25,11 +25,6 @@
                   <li class="nav-item">
                     <a class="nav-link" href="{% url 'ListarProductos' %}"> Productos </a>
                   </li>
-                  {% if verificarLogin %}
-                    <li>
-                        <a class="nav-link" href="{% url 'AgregarProducto' %}">Agregar Producto</a>
-                    </li>
-                  {% endif %}
                   <li class="nav-item">
                     <a class="nav-link" href="{% url 'CrearCliente' %}"> Client </a>
                   </li>

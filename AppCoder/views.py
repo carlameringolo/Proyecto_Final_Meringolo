@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.forms import AuthenticationForm,UserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 
 # Create your views here.
@@ -23,15 +25,15 @@ def contacto(req):
         if formulario.is_valid():
             try:
                 formulario.save()
-                messages.succes(req,'Mensaje enviado con exito')
+                return render(req, 'contacto.html', {'mensaje': 'Mensaje enviado con exito'})
             except:
-                messages.error(req,'Error al enviar mensaje')
+                return render(req, 'contacto.html', {'mensaje': 'Error al enviar mensaje'})
         else:
-            messages.error(req,'Formulario invalido')
+            return render(req, 'contacto.html', {'mensaje': 'Formulario invalido'})
     return render(req,'contacto.html',{'formulario':formulario})
  
 
-class ClienteList(ListView):
+class ClienteList(LoginRequiredMixin,ListView):
     model=Cliente
     template_name='cliente_list.html'
     context_object_name='cliente'
@@ -68,6 +70,10 @@ class ClienteDelete(DeleteView):
 
 #login, logout
 def loginView(req):
+
+    if req.user.is_authenticated:
+        return render(req, 'inicio.html', {'mensaje': 'Ya hay un usuario logeado. Por favor dirigite al logout'})
+
     if req.method=='POST':
         formulario=AuthenticationForm(req,data=req.POST)
 
@@ -80,9 +86,9 @@ def loginView(req):
 
             if user:
                 login(req,user)
-                return render(req, 'inicio.html', {'mensaje': f'Bienvenido {usuario}!'})
+                return render(req, 'inicio.html', {'mensaje': f'Bienvenido {usuario}!'})     
             else:
-                return render(req, 'inicio.html',{'mensaje','Datos incorrectos'})
+                return render(req, 'inicio.html', {'mensaje': f'Datos incorrectos'})
     else:
         formulario=AuthenticationForm()
     
@@ -90,11 +96,13 @@ def loginView(req):
 
 
 def logoutView(req):
-    if req.method=='POST':
+    if req.user.is_authenticated:
         logout(req)
-        return render(req, 'inicio.html',{'mensaje':' Vuelva pronto'})
+        return render(req, 'inicio.html', {'mensaje': 'Has cerrado sesion. Vuela pronto!'})     
+        
     else:
-        return render(req, 'inicio.html',{'mensaje':'Logout incorrecto'})
+        return render(req, 'inicio.html', {'mensaje': 'No hay ningun usuario logeado'})     
+
 
 
 def verificarLogin(req):
@@ -104,40 +112,12 @@ def verificarLogin(req):
     return None
 
 
-
-
-
-
-@login_required
-def agregar_producto(req):
-
-    if not hasattr(req.user,'empleado') or not req.user.empleado:
+'''   if not hasattr(req.user,'empleado') or not req.user.empleado:
         messages.error(req,'Usuario no encortado')
         return render(req,'login.html')
     
-    empleado=req.user.empleado
-
-
-    if req.method=='POST':
-
-        formulario=ProductoForm(req.POST, req.FILES)
-
-        if formulario.is_valid():
-
-            producto=formulario.save(commit=False)
-            producto.empleado=empleado
-            producto.save()            
-            messages.success(req,'Producto agregado con exito')
-
-            return render(req,'producto_list.html')
-
-    else:
-        formulario=ProductoForm()
-        
-    return render(req,'agregarProducto.html',{'formulario':formulario})
-
-
-
+       empleado=req.user.empleado
+'''
 
 def register(req):
     if req.method=='POST':
@@ -157,6 +137,43 @@ def register(req):
 
 
 
+
+
+@login_required
+def agregar_producto(req):
+
+    if req.method=='POST':
+
+        formulario=ProductoForm(req.POST, req.FILES)
+
+        if formulario.is_valid():
+
+            data=formulario.cleaned_data
+
+            producto=Producto(user=req.user, imagen=data['imagen'])
+            producto.save()            
+
+            return render(req,'inicio.html',{'mensaje':'Imagen actualizados con exito'})
+
+    else:
+        formulario=ProductoForm()
+    
+        return render(req,'agregarProducto.html',{'formulario':formulario})
+
+
+
+
+
+
+class ProductoCreate(LoginRequiredMixin,CreateView):
+    model=Producto
+    template_name='producto_create.html'
+    fields=['nombre_producto','precio','imagen','empleado']
+    success_url='/app-coder/listaProductos'
+
+    def form_valid(self, form):
+        print("Formulario válido")
+        return super().form_valid(form)
 
 class ProductoList(ListView):
     model=Producto

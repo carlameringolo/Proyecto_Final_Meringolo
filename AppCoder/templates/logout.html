@@ -20,19 +20,14 @@
     <div class="why_container my-4">
       <div class="img_box">
         
-        <form method="post" action="{% url 'Logout' %}">
 
-            {% csrf_token %}
-        
-            <button type="submit">Cerrar Sesión</button>
-        
-        </form>
-
-        <p>Gracias por visitarnos, vuelva cuando guste</p>
-
-        <a href="{% url 'Inicio' %}">Inicio</a>
+        {% if mensaje %}
+            <div class="'alert alert-info" role="alert">
+                {{ mensaje }}
+            </div>
+        {% endif %}
     
-    
+
       </div>
     </div>
   </section>

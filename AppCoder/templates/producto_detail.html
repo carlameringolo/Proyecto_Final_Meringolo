@@ -1,0 +1,32 @@
+{% extends 'padre.html' %}
+
+{% block contenidoQueCambia %}
+
+  <!-- why section -->
+
+  <section class="why_section layout_padding">
+    <div class="container">
+      <div class="d-flex flex-column align-items-center text-center">
+        <h2 class="custom_heading ">
+            Aca podes acceder al detalle de nustros productos
+        </h2>
+      </div>
+    </div>
+    <div class="why_container my-4">
+      <div class="img_box">
+        
+        <h1 style="color: aliceblue;">Vista en detalle de los productos</h1>
+
+        <h4 style="color: beige;">Nombre: {{ clase.nombre }}</h4>
+        <h4 style="color: beige;">Precio: {{ clase.precio }}</h4>
+        <h4 style="color: beige;">Empleado: {{ clase.empleado }}</h4>
+    
+    
+      </div>
+    </div>
+
+  </section>
+
+  <!-- end why section -->
+
+{% endblock contenidoQueCambia %}

@@ -7,6 +7,12 @@
     <div class="about_container">
       <div class="container">
         <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+        {% if mensaje %}
+            <div class="'alert alert-info" role="alert">
+                {{ mensaje }}
+                <button type="submit"><a href="{% url 'Contacto' %}">Mandar otro mensaje</a></button>
+            </div>
+        {% endif %}
         <form method="POST">
             {% csrf_token %}
             {{ formulario.as_p }}

@@ -8,22 +8,22 @@
     <div class="container">
       <div class="d-flex flex-column align-items-center text-center">
         <h2 class="custom_heading ">
-            Aca podes acceder aL detalle de nuestos clientes
+            Aca podes acceder a la lista de nuestros clientes
         </h2>
       </div>
     </div>
     <div class="why_container my-4">
       <div class="img_box">
-        <h1 style="color: rgb(16, 66, 109);">Vista en detalle del cliente</h1>
-
-        <h4 style="color: rgb(25, 184, 212);">Nombre: {{ cliente.nombre }}</h4>
-        <h4 style="color: rgb(25, 184, 212);">Mail: {{ cliente.mail }}</h4>
-        <h4 style="color: rgb(25, 184, 212);">Telefono: {{ cliente.tel }}</h4>
-        <h4 style="color: rgb(25, 184, 212);">Metodo de Pago: {{ cliente.metodo_de_pago }}</h4>
-
+        
+        <form action="{% url 'AgregarProducto' %}" method="post">
+            {% csrf_token %}
+            {{formulario.as_p}}
+    
+            <button type="submit">Agregar Producto</button>
+        </form>
+    
       </div>
     </div>
-
   </section>
 
   <!-- end why section -->
